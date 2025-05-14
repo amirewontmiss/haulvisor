@@ -1,0 +1,30 @@
+default_backend: pennylane
+max_qubits_warning: 20
+noise_model: null
+
+braket:
+  # AWS profile name (from ~/.aws/credentials)
+  profile: default
+  # AWS region (e.g. us-west-2, us-east-1)
+  region: us-west-2
+  # Device name: ionq or rigetti or sv1 (simulator)
+  device: arn:aws:braket:::device/quantum-simulator/amazon/sv1
+  # Shots per job
+  shots: 1000
+
+ibm:
+  token: a2a7631b49115622fa353f08ca8c2dec5259a11af32e1d27be469d3e9d8b77aaa9b28fdaa9a0d82265aa50a20339023cc16b9828991657157e5c13575180e838
+  url: https://auth.quantum-computing.ibm.com/api
+  backend: ibm_lagos
+  shots: 1024
+
+noise:
+  pennylane:
+    model: depolarizing
+    params:
+      p: 0.05
+  qiskit:
+    model: readout
+    params:
+      readout_error: 0.02
+

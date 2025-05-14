@@ -1,0 +1,2 @@
+[console_scripts]
+haulvisor = haulvisor.cli.cli:app

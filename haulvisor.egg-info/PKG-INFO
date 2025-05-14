@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: haulvisor
+Version: 0.1.0
+Summary: Haulvisor: Quantum circuit management and execution platform.
+Home-page: URL_TO_YOUR_PROJECT_REPO
+Author: Xan
+Author-email: your.email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic<2.0.0,>=1.8.2
+Requires-Dist: typer[all]>=0.12.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

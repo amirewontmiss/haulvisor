@@ -1,0 +1,38 @@
+{
+  "name": "UnitaryTest",
+  "qubits": 2,
+  "gates": [
+    {
+      "op": "H",
+      "target": 0
+    },
+    {
+      "op": "CX",
+      "control": 0,
+      "target": 1
+    },
+    {
+      "op": "RY",
+      "target": 0,
+      "params": {
+        "params": [1.047]
+      }
+    },
+    {
+      "op": "RZ",
+      "target": 1,
+      "params": {
+        "params": [0.785]
+      }
+    },
+    {
+      "op": "MEASURE",
+      "target": 0
+    },
+    {
+      "op": "MEASURE",
+      "target": 1
+    }
+  ]
+}
+

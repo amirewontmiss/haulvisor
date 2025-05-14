@@ -1,0 +1,14 @@
+{
+  "name": "HadamardTest",
+  "qubits": 1,
+  "gates": [
+    {
+      "op": "H",
+      "target": 0
+    },
+    {
+      "op": "MEASURE",
+      "target": 0 
+    }
+  ]
+}

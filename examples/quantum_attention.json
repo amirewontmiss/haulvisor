@@ -1,0 +1,9 @@
+{
+  "name": "BellDemo",
+  "qubits": 2,
+  "gates": [
+    {"op": "H", "target": 0},
+    {"op": "CX", "control": 0, "target": 1}
+  ]
+}
+
