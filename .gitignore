@@ -1,0 +1,144 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# C extensions
+*.o
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+#*.log # Covered by general *.log below
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+VENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# IDE / Editor specific files
+.idea/
+.vscode/
+*.project
+*.pydevproject
+*.sublime-workspace
+*.sublime-project
+project.vim
+Session.vim
+*.tmproj
+.toolstarget
+*.DS_Store
+Thumbs.db
+
+# Secrets - List common names, but manage actual secrets outside Git
+credentials.*
+*.envrc
+config.json # If it might contain secrets
+secrets.yaml
+*.pem
+*.key
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+
+# Log files
+*.log
+logs/
+
+# Output files (like your noiseless.vec) - Optional:
+# If this file is a result of a run and not something you want to version control, add it.
+# If you want to keep specific examples of output, commit them intentionally.
+# noiseless.vec
+# *.vec
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python Gtk+
+*.glade~
