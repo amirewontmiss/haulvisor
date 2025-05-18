@@ -1,0 +1,14 @@
+{
+  "job": "603e9ccc-d58e-4153-9f72-13416dd76e5b",
+  "backend": "braket",
+  "submitted": "2025-05-17T06:57:35.599563",
+  "model_name": "temp_circuit_8e887843-f2e1-492e-881c-b7033b34f2b8.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 4,
+  "circuit_depth": 3,
+  "qubits": 2,
+  "status": "completed",
+  "completed": "2025-05-17T06:57:35.519393",
+  "result_summary": "Counter({'00': 501, '11': 499})",
+  "elapsed_ms": "N/A (submitted timestamp missing)"
+}

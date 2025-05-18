@@ -1,0 +1,12 @@
+{
+  "name": "BellState",
+  "qubits": 2,
+  "shots": 1024,
+  "gates": [
+    { "op": "H", "target": 0 },
+    { "op": "CX", "control": 0, "target": 1 },
+    { "op": "MEASURE", "target": 0 },
+    { "op": "MEASURE", "target": 1 }
+  ]
+}
+

@@ -1,0 +1,14 @@
+{
+  "job": "a6c6895d-090d-453c-8ff7-a08cb1371d2f",
+  "backend": "qiskit",
+  "submitted": "2025-05-16T16:37:28.323290",
+  "model_name": "bell_state.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 4,
+  "circuit_depth": 2,
+  "qubits": 2,
+  "status": "completed",
+  "completed": "2025-05-16T16:37:28.529267",
+  "result_summary": "Statevector([0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j],\n            dims=(2, 2))",
+  "elapsed_ms": 470
+}

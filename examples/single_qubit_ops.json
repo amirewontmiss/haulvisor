@@ -1,0 +1,25 @@
+{
+  "name": "SingleQubitOps",
+  "qubits": 1,
+  "shots": 100,
+  "gates": [
+    { "op": "H", "target": 0 },
+    { "op": "X", "target": 0 },
+    { "op": "Y", "target": 0 },
+    { "op": "Z", "target": 0 },
+    { "op": "S", "target": 0 },
+    { "op": "SDG", "target": 0 },
+    { "op": "T", "target": 0 },
+    { "op": "TDG", "target": 0 },
+    { "op": "RX", "target": 0, "params": {"theta": 1.23} },
+    { "op": "RY", "target": 0, "params": {"theta": -0.45} },
+    { "op": "RZ", "target": 0, "params": {"theta": 2.34} },
+    { "op": "P",  "target": 0, "params": {"theta": 0.88} },
+    { "op": "U1", "target": 0, "params": {"lambda": 0.11} },
+    { "op": "U2", "target": 0, "params": {"phi": 0.22, "lambda": 0.33} },
+    { "op": "U3", "target": 0, "params": {"theta": 0.44, "phi": 0.55, "lambda": 0.66} },
+    { "op": "RESET", "target": 0 },
+    { "op": "MEASURE", "target": 0 }
+  ]
+}
+

@@ -1,3 +1,4 @@
+# ~/haulvisor_project/haulvisor/noise.py
 """
 haulvisor.noise
 ---------------
@@ -8,14 +9,20 @@ Reads `noise` section from config/default.yaml.
 from __future__ import annotations
 import yaml
 import pathlib
-from typing import Any, Dict, Optional, Callable
+from typing import Any, Dict, Optional, Callable, List as TypingList
 
 # PennyLane imports
 try:
     import pennylane as qml
     from pennylane.transforms import transform
+    from pennylane.tape import QuantumTape # For type hinting
+    import pennylane.operation # For type hinting Operation
+    import pennylane.measurements # For type hinting MeasurementProcess
 except ImportError:
-    qml = None  # PennyLane not installed
+    qml = None
+    transform = None
+    QuantumTape = None # Define for type hinting even if not available
+    pennylane = None # to allow attribute access like pennylane.operation
 
 # Qiskit Aer noise imports
 try:
@@ -25,81 +32,78 @@ except ImportError:
     depolarizing_error = None
     ReadoutError = None
 
-# ── Load noise config ─────────────────────────────────────────────────────── #
-_config_path = (
-    pathlib.Path(__import__("haulvisor").__file__)
-    .parent
-    .joinpath("config", "default.yaml")
+_config_file_path = (
+    pathlib.Path(__file__) # Path to current noise.py (haulvisor_project/haulvisor/noise.py)
+    .parent # Up to haulvisor_project/haulvisor/
+    .joinpath("config", "default.yaml") # Correctly looks for haulvisor_project/haulvisor/config/default.yaml
 )
-_NOISE_CFG: Dict[str, Any] = yaml.safe_load(_config_path.read_text()).get("noise", {})
+
+_NOISE_CFG: Dict[str, Any] = {}
+if _config_file_path.exists():
+    try:
+        _NOISE_CFG = yaml.safe_load(_config_file_path.read_text()).get("noise", {})
+    except Exception as e:
+        print(f"Warning: Could not load or parse noise config from {_config_file_path}: {e}")
+else:
+    print(f"Warning: Noise config file not found at {_config_file_path}")
 
 
 class HaulNoiseModel:
     """
     Encapsulates a noise model for a given backend.
     """
-
-    def __init__(self, model: str, params: Dict[str, Any]):
-        self.model = model
+    def __init__(self, model_type: str, params: Dict[str, Any]):
+        self.model_type = model_type
         self.params = params
 
     @staticmethod
     def for_backend(backend: str) -> Optional[HaulNoiseModel]:
-        """
-        Return a HaulNoiseModel if config exists for this backend.
-        """
         cfg = _NOISE_CFG.get(backend.lower())
         if cfg and "model" in cfg:
             return HaulNoiseModel(cfg["model"], cfg.get("params", {}))
         return None
 
-    def apply_to_pennylane(self, qnode: Callable) -> Callable:
-        """
-        Wrap a PennyLane QNode to inject noise after each operation.
-        Supported models: 'depolarizing'
-        """
-        if qml is None:
+    def apply_to_pennylane(self, qfunc: Callable) -> Callable:
+        if qml is None or transform is None:
             raise RuntimeError("PennyLane not installed; cannot apply PennyLane noise model.")
 
-        model = self.model
-        params = self.params
+        print("DEBUG HNM: apply_to_pennylane called. Using PASS-THROUGH _inject_noise for debugging.")
 
         @transform
-        def _inject_noise(tape, *args, **kwargs) -> tuple[list, list]:
-            new_ops = []
-            for op in tape.operations:
-                new_ops.append(op)
-                if model == "depolarizing":
-                    p = float(params.get("p", 0.0))
-                    for w in op.wires:
-                        new_ops.append(qml.DepolarizingChannel(p, wires=w))
-            # Leave measurements untouched
-            return new_ops, tape.measurements
+        def _inject_noise_passthrough(tape: QuantumTape, *args, **kwargs) -> tuple[TypingList[pennylane.operation.Operation], TypingList[pennylane.measurements.MeasurementProcess]]:
+            """
+            DEBUGGING VERSION: This transform does nothing to the tape.
+            It just returns the original operations and measurements.
+            """
+            print(f"DEBUG HNM _inject_noise_passthrough: Original tape.operations: {tape.operations}")
+            print(f"DEBUG HNM _inject_noise_passthrough: Original tape.measurements: {tape.measurements}")
+            return tape.operations, tape.measurements # Pass-through
 
-        return _inject_noise(qnode)
+        # Apply the pass-through transform
+        return _inject_noise_passthrough(qfunc)
 
     def get_qiskit_noise_model(self) -> Optional[NoiseModel]:
-        """
-        Construct a Qiskit NoiseModel or return None if Aer not installed.
-        Supported models: 'depolarizing', 'readout'
-        """
-        if NoiseModel is None:
-            # Aer not available
+        if NoiseModel is None or depolarizing_error is None or ReadoutError is None:
             return None
 
-        nm = NoiseModel()
+        qiskit_nm = NoiseModel()
+        noise_added = False
 
-        if self.model == "depolarizing":
+        if self.model_type == "depolarizing":
             p = float(self.params.get("p", 0.0))
-            err1 = depolarizing_error(p, 1)
-            err2 = depolarizing_error(p, 2)
-            nm.add_all_qubit_quantum_error(err1, ["u1", "u2", "u3", "rz", "rx", "ry"])
-            nm.add_all_qubit_quantum_error(err2, ["cx", "cnot"])
+            if p > 0:
+                error1 = depolarizing_error(p, 1)
+                error2 = depolarizing_error(p, 2)
+                qiskit_nm.add_all_qubit_quantum_error(error1, ["u1", "u2", "u3", "rz", "sx", "x", "p", "id", "h", "s", "sdg", "t", "tdg", "ry"])
+                qiskit_nm.add_all_qubit_quantum_error(error2, ["cx", "ecr", "cz", "swap"])
+                noise_added = True
 
-        if self.model == "readout":
-            r = float(self.params.get("readout_error", 0.0))
-            ro_err = ReadoutError([[1 - r, r], [r, 1 - r]])
-            nm.add_all_qubit_readout_error(ro_err)
-
-        return nm
-
+        if self.model_type == "readout":
+            r = float(self.params.get("readout_error_prob", self.params.get("r", 0.0)))
+            if r > 0:
+                prob_matrix = [[1 - r, r], [r, 1 - r]]
+                readout_error_op = ReadoutError(prob_matrix)
+                qiskit_nm.add_all_qubit_readout_error(readout_error_op)
+                noise_added = True
+        
+        return qiskit_nm if noise_added else None

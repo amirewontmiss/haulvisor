@@ -1,0 +1,14 @@
+{
+  "job": "8c5f6606-9e15-432e-93a2-ec1edfb88911",
+  "backend": "qiskit",
+  "submitted": "2025-05-16T16:51:16.508544",
+  "model_name": "single_qubit_ops.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nx q[0];\ny q[0];\nz q[0];\nrx(1.23) q[0];\nry(-0.45) q[0];\nrz(2.34) q[0];\nu1(0.88) q[0];\nu1(0.11) q[0];\nu2(0.22,0.33) q[0];\nu3(0.44,0.55,0.66) q[0];\nreset q[0];\nmeasure q[0] -> c[0];\n",
+  "gate_count": 13,
+  "circuit_depth": 1,
+  "qubits": 1,
+  "status": "completed",
+  "completed": "2025-05-16T16:51:16.709323",
+  "result_summary": "Statevector([-0.99974571+0.02255009j,  0.        +0.j        ],\n            dims=(2,))",
+  "elapsed_ms": 363
+}

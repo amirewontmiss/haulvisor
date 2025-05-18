@@ -1,0 +1,14 @@
+{
+  "job": "c4182455-c3cc-46aa-b426-a821dfd30e37",
+  "backend": "qiskit",
+  "submitted": "2025-05-16T16:38:57.254614",
+  "model_name": "ghz_state_3q.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[0],q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 6,
+  "circuit_depth": 3,
+  "qubits": 3,
+  "status": "completed",
+  "completed": "2025-05-16T16:38:57.656946",
+  "result_summary": "Statevector([1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j,\n             0.+0.j],\n            dims=(2, 2, 2))",
+  "elapsed_ms": 592
+}

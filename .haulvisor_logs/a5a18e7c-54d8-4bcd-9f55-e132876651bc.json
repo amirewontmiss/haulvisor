@@ -1,0 +1,14 @@
+{
+  "job": "a5a18e7c-54d8-4bcd-9f55-e132876651bc",
+  "backend": "qiskit",
+  "submitted": "2025-05-17T05:56:39.297363",
+  "model_name": "param_circuit.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\nh q[1];\nh q[2];\nrz(0.785) q[0];\nry(-1.57) q[1];\nrx(3.14159) q[2];\ncx q[0],q[1];\nu1(0.5) q[1];\ncx q[1],q[2];\nu3(1.0,0.5,-0.5) q[0];\nbarrier q[0],q[1],q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 14,
+  "circuit_depth": 7,
+  "qubits": 3,
+  "status": "completed",
+  "completed": "2025-05-17T05:56:39.838415",
+  "result_summary": "Statevector([ 0.        +0.j        ,  0.        +0.j        ,\n             -0.        +0.j        ,  0.77860531-0.62751396j,\n              0.        +0.j        ,  0.        +0.j        ,\n           ",
+  "elapsed_ms": 715
+}

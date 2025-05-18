@@ -1,0 +1,14 @@
+{
+  "job": "c3bdb9f1-9f68-43af-8455-35dbe999ecb4",
+  "backend": "qiskit",
+  "submitted": "2025-05-16T16:52:26.888415",
+  "model_name": "controlled_ops.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[4];\ncreg c[4];\nh q[0];\nh q[1];\nx q[2];\nbarrier q[0],q[1],q[2],q[3];\ncx q[0],q[1];\ncy q[0],q[2];\ncz q[1],q[2];\nch q[0],q[1];\nbarrier q[0],q[1],q[2],q[3];\ncrx(1.57) q[0],q[1];\ncry(-0.78) q[1],q[2];\ncrz(2.3) q[0],q[2];\ncu1(1.0) q[1],q[0];\ncu1(0.5) q[2],q[0];\nbarrier q[0],q[1],q[2],q[3];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 18,
+  "circuit_depth": 10,
+  "qubits": 4,
+  "status": "completed",
+  "completed": "2025-05-16T16:52:27.490270",
+  "result_summary": "Statevector([ 0.+0.j,  0.+0.j, -0.+0.j, -0.+0.j,  0.+0.j,  0.+0.j, -1.+0.j,\n             -0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j,\n              0.+0.j,  0.+0.j],\n            dims",
+  "elapsed_ms": 1046
+}

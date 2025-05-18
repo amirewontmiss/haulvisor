@@ -1,0 +1,11 @@
+{
+  "job": "6ba63e1d-5581-4b03-9ca5-73386121b24f",
+  "backend": "pennylane",
+  "submitted": "2025-05-14T18:10:35.872230",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nry(1.047) q[0];\nrz(0.785) q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 6,
+  "circuit_depth": 2,
+  "qubits": 2,
+  "completed": "2025-05-14T18:10:42.526721",
+  "elapsed_ms": 6654
+}

@@ -1,0 +1,14 @@
+{
+  "job": "9f00d446-9d6a-4751-9334-61aed91ba6d9",
+  "backend": "pennylane",
+  "submitted": "2025-05-16T16:37:10.478810",
+  "model_name": "bell_state.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 4,
+  "circuit_depth": 2,
+  "qubits": 2,
+  "status": "completed",
+  "completed": "2025-05-16T16:37:12.112765",
+  "result_summary": "{'00': 507, '11': 517}",
+  "elapsed_ms": 1709
+}

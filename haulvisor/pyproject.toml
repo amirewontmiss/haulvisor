@@ -1,0 +1,38 @@
+# File: ~/haulvisor_project/haulvisor/pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "haulvisor"
+version = "0.1.0" # Or your current version
+description = "HaulVisor: A Quantum Circuit Orchestration Layer"
+# Add other metadata like authors, readme, license if you wish
+# readme = "README.md" # If you have one in this directory
+# requires-python = ">=3.9" # Specify your minimum Python version
+
+dependencies = [
+    # List direct Python package dependencies of your core HaulVisor library itself.
+    # For example, if your parser, optimizer, or device wrappers directly use:
+    "pydantic>=2.0", 
+    "numpy",
+    # "qiskit", # If used directly by core components, not just device wrappers
+    # "pennylane",
+    # "amazon-braket-sdk",
+    # Add any other core dependencies here.
+    # Dependencies specific to device wrappers might be better as optional dependencies
+    # or handled by the user installing the relevant SDKs separately.
+    # For now, list what's essential for the core library to function.
+]
+
+# Optional: If you have console scripts defined within the haulvisor package itself
+# (though your main CLI entry point is currently separate in haulvisor/cli/cli.py,
+# which is fine and handled by your top-level setup if you publish haulvisor itself)
+# [project.scripts]
+# haulvisor-lib-tool = "haulvisor.some_module:main_function"
+
+# Optional: For development, if you use linters/formatters specific to this package
+# [tool.setuptools.packages.find]
+# where = ["."] # Assuming your haulvisor package code is directly in the haulvisor/ directory
+

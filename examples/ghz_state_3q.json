@@ -1,0 +1,14 @@
+{
+  "name": "GHZState3Qubit",
+  "qubits": 3,
+  "shots": 2048,
+  "gates": [
+    { "op": "H", "target": 0 },
+    { "op": "CX", "control": 0, "target": 1 },
+    { "op": "CX", "control": 0, "target": 2 },
+    { "op": "MEASURE", "target": 0 },
+    { "op": "MEASURE", "target": 1 },
+    { "op": "MEASURE", "target": 2 }
+  ]
+}
+

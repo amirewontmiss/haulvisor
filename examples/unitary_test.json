@@ -1,6 +1,7 @@
 {
   "name": "UnitaryTest",
   "qubits": 2,
+  "shots": 1024,
   "gates": [
     {
       "op": "H",

@@ -1,0 +1,14 @@
+{
+  "job": "08444710-b87a-4c8e-8df8-096857be07a2",
+  "backend": "braket",
+  "submitted": "2025-05-17T05:51:32.271816",
+  "model_name": "ghz_state_3q.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[0],q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 6,
+  "circuit_depth": 4,
+  "qubits": 3,
+  "status": "completed",
+  "completed": "2025-05-17T05:52:06.939320",
+  "result_summary": "Counter({'000': 527, '111': 473})",
+  "elapsed_ms": 35441
+}

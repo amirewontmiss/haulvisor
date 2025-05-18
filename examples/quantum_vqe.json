@@ -3,10 +3,10 @@
   "qubits": 2,
   "shots": 1024,
   "gates": [
-    {"op": "H",  "target": 0},
+    {"op": "H", "target": 0},
     {"op": "CX", "control": 0, "target": 1},
-    {"op": "RY", "theta": 1.047, "target": 0},
-    {"op": "RZ", "theta": 0.785, "target": 1},
+    {"op": "RY", "target": 0, "params": {"theta": 1.047}},
+    {"op": "RZ", "target": 1, "params": {"theta": 0.785}},
     {"op": "MEASURE", "target": 0},
     {"op": "MEASURE", "target": 1}
   ]

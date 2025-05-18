@@ -1,0 +1,14 @@
+{
+  "job": "1f87a3a1-0152-42a2-889b-470e2126d5eb",
+  "backend": "braket",
+  "submitted": "2025-05-17T04:18:56.662415",
+  "model_name": "single_qubit_ops.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nx q[0];\ny q[0];\nz q[0];\nrx(1.23) q[0];\nry(-0.45) q[0];\nrz(2.34) q[0];\nphaseshift(0.88) q[0];\nphaseshift(0.11) q[0];\nrz(0.33) q[0];\nrx(1.5707963267948966) q[0];\nrz(1.5707963267948966) q[0];\nrx(-1.5707963267948966) q[0];\nrz(0.22) q[0];\nrz(0.66) q[0];\nrx(1.5707963267948966) q[0];\nrz(0.44) q[0];\nrx(-1.5707963267948966) q[0];\nrz(0.55) q[0];\nreset q[0];\nmeasure q[0] -> c[0];\n",
+  "gate_count": 13,
+  "circuit_depth": 1,
+  "qubits": 1,
+  "status": "failed",
+  "error_time": "2025-05-17T04:19:25.833310",
+  "error_message": "An error occurred (ValidationException) when calling the CreateQuantumTask operation: [line 23] uses reset which is not supported by the device",
+  "elapsed_ms_until_error": 29346
+}

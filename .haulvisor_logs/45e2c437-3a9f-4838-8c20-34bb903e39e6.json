@@ -1,0 +1,14 @@
+{
+  "job": "45e2c437-3a9f-4838-8c20-34bb903e39e6",
+  "backend": "braket",
+  "submitted": "2025-05-16T16:50:22.034153",
+  "model_name": "param_circuit.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[4];\ncreg c[4];\nh q[0];\nh q[1];\nh q[2];\nrz(0.785) q[0];\nry(-1.57) q[1];\nrx(3.14159) q[2];\ncx q[0],q[1];\nu1(0.5) q[1];\ncx q[1],q[2];\nu3(1.0,0.5,-0.5) q[0];\nbarrier q[0],q[1],q[2],q[3];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 14,
+  "circuit_depth": 3,
+  "qubits": 4,
+  "status": "failed",
+  "error_time": "2025-05-16T16:50:53.657765",
+  "error_message": "An error occurred (ValidationException) when calling the CreateQuantumTask operation: [line 11] uses a gate: u1 which is not supported by the device or defined via a defcal",
+  "elapsed_ms_until_error": 31816
+}

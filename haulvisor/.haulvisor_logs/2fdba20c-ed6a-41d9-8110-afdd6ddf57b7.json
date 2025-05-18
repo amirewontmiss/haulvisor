@@ -1,0 +1,14 @@
+{
+  "job": "2fdba20c-ed6a-41d9-8110-afdd6ddf57b7",
+  "backend": "qiskit",
+  "submitted": "2025-05-16T15:51:19.225521",
+  "model_name": "quantum_vqe.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nry(1.047) q[0];\nrz(0.785) q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 6,
+  "circuit_depth": 2,
+  "qubits": 2,
+  "status": "failed",
+  "error_time": "2025-05-16T15:51:26.601253",
+  "error_message": "no such column: result_summary",
+  "elapsed_ms_until_error": "N/A (submitted timestamp missing)"
+}

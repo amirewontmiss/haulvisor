@@ -1,0 +1,14 @@
+{
+  "job": "7b57ffd9-5074-4bc1-87cc-0776094efbdd",
+  "backend": "pennylane",
+  "submitted": "2025-05-17T06:56:58.356130",
+  "model_name": "temp_circuit_c0616e41-2626-4683-a71f-d4ec4a1ccfe4.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 4,
+  "circuit_depth": 3,
+  "qubits": 2,
+  "status": "completed",
+  "completed": "2025-05-17T06:56:58.091944",
+  "result_summary": "{'11': 497, '00': 527}",
+  "elapsed_ms": "N/A (submitted timestamp missing)"
+}

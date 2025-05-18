@@ -1,0 +1,14 @@
+{
+  "job": "f157f2a1-9e01-432a-a3ff-125b2ce09b73",
+  "backend": "pennylane",
+  "submitted": "2025-05-16T16:49:54.544482",
+  "model_name": "param_circuit.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[4];\ncreg c[4];\nh q[0];\nh q[1];\nh q[2];\nrz(0.785) q[0];\nry(-1.57) q[1];\nrx(3.14159) q[2];\ncx q[0],q[1];\nu1(0.5) q[1];\ncx q[1],q[2];\nu3(1.0,0.5,-0.5) q[0];\nbarrier q[0],q[1],q[2],q[3];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 14,
+  "circuit_depth": 3,
+  "qubits": 4,
+  "status": "completed",
+  "completed": "2025-05-16T16:49:57.803896",
+  "result_summary": "{'1010': 60, '1100': 208, '1110': 185, '0000': 209, '0110': 44, '0010': 184, '0100': 68, '1000': 66}",
+  "elapsed_ms": 3331
+}

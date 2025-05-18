@@ -1,0 +1,34 @@
+# File: ~/haulvisor_project/haulvisor_api/render.yaml
+services:
+  - type: web # Specifies a web service
+    name: haulvisor-api # You can customize this name
+    env: python # Specifies the environment
+    region: oregon # Or your preferred Render region (e.g., frankfurt, singapore)
+    plan: free # Use Render's free tier for now
+    
+    # How to build your service
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt 
+      # The requirements.txt should contain "-e ../haulvisor"
+      # which will install your local haulvisor package.
+      
+    # How to start your service
+    # Uvicorn needs to bind to 0.0.0.0 and use the port Render provides via $PORT
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    
+    # Environment variables for your service
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11" # Or "3.12", "3.10", etc., ensure it's supported by Render
+      # Add any other environment variables your API or HaulVisor core needs.
+      # For example, if HaulVisor needs API keys for IBM or AWS for real device access:
+      # - key: IBM_QUANTUM_TOKEN
+      #   value: "your_actual_ibm_token_here" # Better to use Render Secrets for sensitive data
+      # - key: AWS_ACCESS_KEY_ID 
+      #   fromSecret: true # Create a secret named AWS_ACCESS_KEY_ID in Render dashboard
+      # - key: AWS_SECRET_ACCESS_KEY
+      #   fromSecret: true # Create a secret named AWS_SECRET_ACCESS_KEY in Render dashboard
+      # - key: AWS_REGION
+      #   value: "us-east-1" # Or your default AWS region for Braket
+

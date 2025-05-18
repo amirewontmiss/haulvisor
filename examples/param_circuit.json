@@ -1,0 +1,22 @@
+{
+  "name": "ParameterizedCircuitForBraket",
+  "qubits": 3,
+  "shots": 1024,
+  "gates": [
+    { "op": "H", "target": 0 },
+    { "op": "H", "target": 1 },
+    { "op": "H", "target": 2 },
+    { "op": "RZ", "target": 0, "params": {"theta": 0.785} },
+    { "op": "RY", "target": 1, "params": {"theta": -1.57} },
+    { "op": "RX", "target": 2, "params": {"theta": 3.14159} },
+    { "op": "CX", "control": 0, "target": 1 },
+    { "op": "P",  "target": 1, "params": {"theta": 0.5} },
+    { "op": "CX", "control": 1, "target": 2 },
+    { "op": "U3", "target": 0, "params": {"theta": 1.0, "phi": 0.5, "lambda": -0.5} },
+    { "op": "BARRIER" }, 
+    { "op": "MEASURE", "target": 0 },
+    { "op": "MEASURE", "target": 1 },
+    { "op": "MEASURE", "target": 2 }
+  ]
+}
+

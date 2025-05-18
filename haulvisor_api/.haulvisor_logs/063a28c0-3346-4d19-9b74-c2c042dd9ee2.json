@@ -1,0 +1,14 @@
+{
+  "job": "063a28c0-3346-4d19-9b74-c2c042dd9ee2",
+  "backend": "qiskit",
+  "submitted": "2025-05-17T07:22:40.418738",
+  "model_name": "temp_circuit_913dd64e-505e-4100-913c-369866e1c2e2.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "gate_count": 4,
+  "circuit_depth": 3,
+  "qubits": 2,
+  "status": "completed",
+  "completed": "2025-05-17T07:22:40.226896",
+  "result_summary": "Statevector([1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],\n            dims=(2, 2))",
+  "elapsed_ms": "N/A (submitted timestamp missing)"
+}
