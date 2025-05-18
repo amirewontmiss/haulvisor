@@ -1,22 +1,103 @@
-# Python Virtual Environments
-haulvisor_api_env/
-haulvisor_ui_env/ 
+############################################################
+#            HaulVisor / Python / Node ignore               #
+############################################################
 
-# Next.js UI build/cache folders
+########  Python runtime  ########
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+
+########  Virtual-envs  ########
+.env
+.venv
+env/
+venv/
+ENV/
+VENV/
+env.bak/
+venv.bak/
+haulvisor_api_env/
+haulvisor_ui_env/
+
+########  Build / distribution  ########
+build/
+dist/
+.eggs/
+*.egg-info/
+wheels/
+*.egg
+MANIFEST
+.Python
+develop-eggs/
+downloads/
+lib/
+lib64/
+parts/
+sdist/
+var/
+
+########  Logs, outputs, temp  ########
+.haulvisor_logs/
+logs/
+*.log
+*.vec
+noiseless.vec
+noisy.vec
+*.tmp
+*.swp
+*.swo
+*~
+pip-log.txt
+pip-delete-this-directory.txt
+
+########  Databases  ########
+haulvisor_jobs.db*
+db.sqlite3*
+haulvisor_jobs.db-journal
+
+########  Testing & coverage  ########
+.tox/
+.nox/
+htmlcov/
+.coverage*
+.pytest_cache/
+.hypothesis/
+nosetests.xml
+coverage.xml
+*.cover
+
+########  Docs  ########
+docs/_build/
+site/
+
+########  Node / Next.js UI  ########
 haulvisor-ui/node_modules/
 haulvisor-ui/.next/
 haulvisor-ui/out/
 
-# OS specific
+########  IDE / Editor junk  ########
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+.spyderproject
+.spyproject
+.ropeproject
+project.vim
+Session.vim
+
+########  OS files  ########
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Test/Run Output Files
-*.txt
-*.vec
-noiseless.vec
-noisy.vec
+########  Secrets / credentials  ########
+*.pem
+*.key
+credentials.*
+*.envrc
+secrets.yaml
+config.json
 
-# SQLite databases at root
-haulvisor_jobs.db
-haulvisor_jobs.db-journal
