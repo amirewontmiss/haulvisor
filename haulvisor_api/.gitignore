@@ -1,0 +1,32 @@
+# File: ~/haulvisor_project/haulvisor_api/.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+env/
+venv/
+haulvisor_api_env/ # Your specific virtual environment folder name
+
+# SQLite
+*.db
+*.sqlite3
+haulvisor_jobs.db # Specific database file
+haulvisor_jobs.db-journal # SQLite journal file
+
+# Temporary files
+temp_circuits/
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+

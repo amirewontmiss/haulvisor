@@ -1,0 +1,27 @@
+    # Python cache
+    __pycache__/
+    *.pyc
+    *.pyo
+    *.pyd
+
+    # Database files
+    *.db
+    *.sqlite3
+    haulvisor_jobs.db # If created directly in this folder
+    examples/haulvisor_jobs.db # If created in examples
+    *-journal # SQLite journal files
+
+    # Log files
+    .haulvisor_logs/
+    *.log
+
+    # Output files from tests/runs
+    *.vec
+    *.txt
+    # Add other specific output file patterns if needed
+
+    # Local environment stuff
+    .env
+    env/
+    venv/
+    

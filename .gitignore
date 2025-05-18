@@ -1,0 +1,22 @@
+# Python Virtual Environments
+haulvisor_api_env/
+haulvisor_ui_env/ 
+
+# Next.js UI build/cache folders
+haulvisor-ui/node_modules/
+haulvisor-ui/.next/
+haulvisor-ui/out/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Test/Run Output Files
+*.txt
+*.vec
+noiseless.vec
+noisy.vec
+
+# SQLite databases at root
+haulvisor_jobs.db
+haulvisor_jobs.db-journal
