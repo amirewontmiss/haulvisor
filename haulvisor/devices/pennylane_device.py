@@ -2,8 +2,7 @@
 from __future__ import annotations
 import pennylane as qml
 from pennylane import numpy as pnp 
-from typing import Callable, Dict, Any, Optional, Union, List
-import pennylane_qiskit  
+from typing import Callable, Dict, Any, Optional, Union, List  
 from .device import HaulDevice, register
 from ..noise import HaulNoiseModel 
 
