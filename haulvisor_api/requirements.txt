@@ -17,7 +17,7 @@ rich
 loguru
 
 # ── Quantum SDKs & back-ends ────────────────────────────────────────────────────
-qpennylane
+pennylane
 qiskit
 qiskit-aer
 qiskit-ibm-runtime
