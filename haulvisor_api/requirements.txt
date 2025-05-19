@@ -1,27 +1,33 @@
-# --- Web framework ---
-fastapi==0.110.0
-uvicorn[standard]==0.29.0           # ASGI server (+ websockets, h11, etc.)
-pydantic==2.6.3                     # FastAPI ≥ 0.100 uses Pydantic v2
-pydantic-settings==2.2.1            # clean env-based config, optional
-python-multipart==0.0.9             # file-upload parsing for FastAPI
+# -------------------------------
+# haulvisor_api/requirements.txt
+# -------------------------------
 
-# --- CLI / logging niceties (used by haulvisor or handy during dev) ---
-typer==0.12.3
-rich==13.7.0
-loguru==0.7.2
+# ── Web framework & server ──────────────────────────────────────────────────────
+fastapi>=0.110,<0.120        # tracks current 0.110.x series, blocks a future 1.0 jump
+uvicorn[standard]>=0.29,<0.40
 
-# --- Quantum back-ends HaulVisor supports ---
-pennylane==0.35.0
-qiskit==1.0.2
-qiskit-aer==0.14.2                  # simulator + qiskit.providers.aer.noise
-qiskit-ibm-runtime==0.9.0           # managed IBM Q back-end
-boto3==1.34.42                      # AWS SDK base
-amazon-braket-sdk==1.79.0           # Braket interface
+# ── Validation & settings ───────────────────────────────────────────────────────
+pydantic>=2.7,<3             # satisfies HaulVisor (>=2.7) and FastAPI (<3)
+pydantic-settings>=2.3,<3
+python-multipart             # needed for multipart/form-data uploads
 
-# --- Numeric / scientific stack (used by both HaulVisor & back-ends) ---
-numpy
+# ── CLI / logging / pretty output ───────────────────────────────────────────────
+typer
+rich
+loguru
+
+# ── Quantum SDKs & back-ends ────────────────────────────────────────────────────
+pennylane                    # latest compatible release will be chosen
+qiskit
+qiskit-aer
+qiskit-ibm-runtime
+amazon-braket-sdk
+
+# ── AWS helpers ─────────────────────────────────────────────────────────────────
+boto3
+
+# ── Numeric / scientific stack ─────────────────────────────────────────────────
+numpy                         # leave un-pinned to let SDKs pick a compatible build
 scipy
-
-# --- Misc. ---
-PyYAML==6.0                         # reading config/default.yaml
+PyYAML
 
