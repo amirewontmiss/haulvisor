@@ -55,7 +55,8 @@ app = FastAPI(
 # --- CORS Middleware ---
 origins = [
     "http://localhost:3000", 
-    "http://localhost",      
+    "http://localhost",     
+    "https://haulvisor.vercel.app",
 ]
 app.add_middleware(
     CORSMiddleware,
