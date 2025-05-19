@@ -23,6 +23,7 @@ qiskit-aer
 qiskit-ibm-runtime
 amazon-braket-sdk
 pennylane-qiskit
+pennylane-braket
 
 # ── AWS helpers ─────────────────────────────────────────────────────────────────
 boto3
