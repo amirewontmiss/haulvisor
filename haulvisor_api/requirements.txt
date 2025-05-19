@@ -1,0 +1,27 @@
+# --- Web framework ---
+fastapi==0.110.0
+uvicorn[standard]==0.29.0           # ASGI server (+ websockets, h11, etc.)
+pydantic==2.6.3                     # FastAPI ≥ 0.100 uses Pydantic v2
+pydantic-settings==2.2.1            # clean env-based config, optional
+python-multipart==0.0.9             # file-upload parsing for FastAPI
+
+# --- CLI / logging niceties (used by haulvisor or handy during dev) ---
+typer==0.12.3
+rich==13.7.0
+loguru==0.7.2
+
+# --- Quantum back-ends HaulVisor supports ---
+pennylane==0.35.0
+qiskit==1.0.2
+qiskit-aer==0.14.2                  # simulator + qiskit.providers.aer.noise
+qiskit-ibm-runtime==0.9.0           # managed IBM Q back-end
+boto3==1.34.42                      # AWS SDK base
+amazon-braket-sdk==1.79.0           # Braket interface
+
+# --- Numeric / scientific stack (used by both HaulVisor & back-ends) ---
+numpy==1.26.4
+scipy==1.12.0
+
+# --- Misc. ---
+PyYAML==6.0                         # reading config/default.yaml
+

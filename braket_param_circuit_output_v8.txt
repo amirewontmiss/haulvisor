@@ -1,0 +1,31 @@
+Database initialized at /home/xan/haulvisor_project/haulvisor_jobs.db
+[api/core.py RUN DEBUG] Resolved model path: /home/xan/haulvisor_project/examples/param_circuit.json
+[api/core.py DISPATCH DEBUG] Parsed IR. Qubit count from CircuitIR object: 3
+[api/core.py DISPATCH DEBUG] After optimizer.optimize. Qubit count from ir_opt: 3
+[api/core.py DISPATCH DEBUG] After metrics.calculate. Qubit count from metrics_dict: 3
+[api/core.py DISPATCH DEBUG] Qubit count from ir_opt before QASM gen: 3
+[qasm_gen INFO] Skipping BARRIER instruction for Braket backend.
+{
+  "job": "8d8fced8-ce79-47d5-a7f1-6aeb117e3495",
+  "backend": "braket",
+  "submitted": "2025-05-17T05:08:22.662405",
+  "model_name": "param_circuit.json",
+  "circ": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\nh q[1];\nh q[2];\nrz(0.785) q[0];\nry(-1.57) q[1];\nrx(3.14159) q[2];\ncx q[0],q[1];\nphaseshift(0.5) q[1];\ncx q[1],q[2];\nrz(0.5) q[0];\nry(1.0) q[0];\nrz(-0.5) q[0];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "gate_count": 14,
+  "circuit_depth": 7,
+  "qubits": 3,
+  "status": "completed",
+  "completed": "2025-05-17T05:08:37.910326",
+  "result_summary": "Counter({'000': 205, '110': 204, '001': 191, '111': 185, '011': 55, '100': 54, '010': 53, '101': 53})",
+  "elapsed_ms": 15448
+}
+{
+  "110": 204,
+  "010": 53,
+  "001": 191,
+  "101": 53,
+  "100": 54,
+  "000": 205,
+  "111": 185,
+  "011": 55
+}

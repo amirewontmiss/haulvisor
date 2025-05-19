@@ -1,2 +1,4 @@
+# Root requirements – install the project itself, then API extras
+-e .
 -r haulvisor_api/requirements.txt
-.
+
