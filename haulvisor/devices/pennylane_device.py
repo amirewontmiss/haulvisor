@@ -5,7 +5,7 @@ from pennylane import numpy as pnp
 from typing import Callable, Dict, Any, Optional, Union, List
 import pennylane_qiskit  
 from .device import HaulDevice, register
-from ..noise import HaulNoiseModel # Still import it, just won't use it in compile for this test
+from ..noise import HaulNoiseModel 
 
 @register
 class PennyLaneDevice(HaulDevice):
