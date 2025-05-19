@@ -19,8 +19,8 @@ boto3==1.34.42                      # AWS SDK base
 amazon-braket-sdk==1.79.0           # Braket interface
 
 # --- Numeric / scientific stack (used by both HaulVisor & back-ends) ---
-numpy==1.26.4
-scipy==1.12.0
+numpy
+scipy
 
 # --- Misc. ---
 PyYAML==6.0                         # reading config/default.yaml
