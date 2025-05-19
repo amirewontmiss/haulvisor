@@ -17,14 +17,14 @@ rich
 loguru
 
 # ── Quantum SDKs & back-ends ────────────────────────────────────────────────────
-pennylane                    # latest compatible release will be chosen
+qpennylane
 qiskit
 qiskit-aer
 qiskit-ibm-runtime
 amazon-braket-sdk
 pennylane-qiskit
 amazon-braket-pennylane-plugin
-
+ 
 # ── AWS helpers ─────────────────────────────────────────────────────────────────
 boto3
 
