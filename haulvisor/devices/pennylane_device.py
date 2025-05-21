@@ -1,10 +1,17 @@
 # ~/haulvisor_project/haulvisor/devices/pennylane_device.py
 from __future__ import annotations
+
 import pennylane as qml
-from pennylane import numpy as pnp 
-from typing import Callable, Dict, Any, Optional, Union, List  
+from pennylane import numpy as pnp
+from typing import Any, Dict, Optional
+
+# ⬇️  NEW: fallback bridge if PennyLane’s QASM plug-in is missing
+from qiskit import QuantumCircuit
+
 from .device import HaulDevice, register
-from ..noise import HaulNoiseModel 
+from ..noise import HaulNoiseModel      # kept for future use / noise insertion
+# --------------------------------------------------------------------------- #
+
 
 @register
 class PennyLaneDevice(HaulDevice):
@@ -15,28 +22,66 @@ class PennyLaneDevice(HaulDevice):
     def __init__(self, shots: int | None = None):
         super().__init__()
         self.shots = shots if shots is not None else self.default_shots
-        self.dev: Optional[qml.Device] = None 
-        self._compiled_qnode: Optional[qml.QNode] = None # Removed _qfunc_from_qasm as it's local to compile
+        self.dev: Optional[qml.Device] = None
+        self._compiled_qnode: Optional[qml.QNode] = None
         self.num_wires_for_circuit: Optional[int] = None
 
+    # ------------------------------------------------------------------ #
+    # Helpers                                                             #
+    # ------------------------------------------------------------------ #
     def _get_num_wires_from_qasm(self, qasm: str) -> int:
         for line in qasm.splitlines():
             line = line.strip()
             if line.startswith("qreg"):
                 try:
-                    name_and_size = line.split(" ")[1]
+                    name_and_size = line.split(" ")[1]          # e.g. q[5];
                     return int(name_and_size.split("[")[1].split("]")[0])
                 except (IndexError, ValueError) as e:
-                    raise ValueError(f"Malformed qreg declaration in QASM: '{line}'. Error: {e}")
-        raise ValueError("Could not determine number of wires from QASM 'qreg' declaration.")
+                    raise ValueError(
+                        f"Malformed qreg declaration in QASM: '{line}'. Error: {e}"
+                    )
+        raise ValueError("Could not determine number of wires from QASM 'qreg'")
 
+    # ------------------------------------------------------------------ #
+    # COMPILE                                                             #
+    # ------------------------------------------------------------------ #
     def compile(self, qasm: str) -> qml.QNode:
-        qfunc_from_qasm = qml.from_qasm(qasm) # Fresh parse from QASM
+        """
+        Build a PennyLane QNode from OpenQASM text.
 
+        ① Try `qml.from_qasm` (needs `pennylane-qasm` plug-in).  
+        ② If that fails, parse with Qiskit and convert via `qml.from_qiskit`.
+        """
+
+        # --- attempt ① : native PennyLane loader -----------------------
+        try:
+            qfunc_from_qasm = qml.from_qasm(qasm)
+        except Exception as err_qasm:
+            # --- attempt ② : Qiskit → PennyLane ------------------------
+            try:
+                qc = QuantumCircuit.from_qasm_str(qasm)
+                qfunc_from_qasm = qml.from_qiskit(qc)
+                print(
+                    "[PennyLaneDevice] INFO – qml.from_qasm unavailable, "
+                    "used qiskit→pennylane fallback."
+                )
+            except Exception as err_fallback:
+                raise RuntimeError(
+                    "Failed to load QASM with PennyLane and with the "
+                    "Qiskit fallback.\n"
+                    f" • qml.from_qasm error : {err_qasm}\n"
+                    f" • qiskit fallback    : {err_fallback}"
+                ) from err_fallback
+
+        # ----------------------------------------------------------------
+        # Remaining logic is unchanged
+        # ----------------------------------------------------------------
         try:
             self.num_wires_for_circuit = self._get_num_wires_from_qasm(qasm)
         except ValueError as e:
-            raise ValueError(f"QASM processing error: {e}. Cannot configure PennyLane device.") from e
+            raise ValueError(
+                f"QASM processing error: {e}. Cannot configure PennyLane device."
+            ) from e
 
         if not (0 < self.num_wires_for_circuit <= self.max_qubits):
             raise ValueError(
@@ -44,72 +89,126 @@ class PennyLaneDevice(HaulDevice):
                 f"but PennyLaneDevice supports 1 to {self.max_qubits} qubits."
             )
 
-        self.dev = qml.device("default.qubit", wires=self.num_wires_for_circuit, shots=self.shots)
+        self.dev = qml.device(
+            "default.qubit",
+            wires=self.num_wires_for_circuit,
+            shots=self.shots,
+        )
 
-        # --- COMPLETELY BYPASS NOISE TRANSFORM FOR THIS TEST ---
-        print(f"INFO: BYPASSING Haulvisor noise model for PennyLane. Compiling circuit with {self.num_wires_for_circuit} wires.")
-        qfunc_for_decoration = qfunc_from_qasm 
-        # --- END BYPASS ---
-            
+        # --- COMPLETELY BYPASS NOISE TRANSFORM FOR THIS TEST ------------
+        print(
+            f"INFO: BYPASSING HaulVisor noise model for PennyLane. "
+            f"Compiling circuit with {self.num_wires_for_circuit} wires."
+        )
+        qfunc_for_decoration = qfunc_from_qasm
+        # --- END BYPASS --------------------------------------------------
+
         @qml.qnode(self.dev)
         def final_circuit_qnode():
-            qfunc_for_decoration() 
+            qfunc_for_decoration()
             return qml.sample(wires=range(self.num_wires_for_circuit))
 
         self._compiled_qnode = final_circuit_qnode
         return self._compiled_qnode
 
-    # run() and monitor() methods remain the same
+    # ------------------------------------------------------------------ #
+    # run() and monitor() are **unchanged** from your current version    #
+    # ------------------------------------------------------------------ #
     def run(self, qnode_to_run: qml.QNode) -> Dict[str, int]:
         if qnode_to_run is None:
-            raise ValueError("Invalid QNode passed to run method. Ensure compile() was successful and returned a QNode.")
+            raise ValueError(
+                "Invalid QNode passed to run method. "
+                "Ensure compile() was successful and returned a QNode."
+            )
         try:
-            raw_results = qnode_to_run() 
+            raw_results = qnode_to_run()
         except Exception as e:
             raise RuntimeError(f"Error during PennyLane QNode execution: {e}") from e
-        
+
         if self.shots > 0:
             if not isinstance(raw_results, pnp.ndarray):
-                 return {"error": f"Expected samples (numpy array) from PennyLane QNode with shots, got {type(raw_results)}", "raw_result": str(raw_results)}
+                return {
+                    "error": (
+                        "Expected samples (numpy array) from PennyLane QNode "
+                        f"with shots, got {type(raw_results)}"
+                    ),
+                    "raw_result": str(raw_results),
+                }
 
-            if raw_results.ndim == 1: 
+            if raw_results.ndim == 1:
                 if self.num_wires_for_circuit == 1:
-                     samples_str = [str(int(s)) for s in raw_results]
-                elif self.shots == 1 and raw_results.shape[0] == self.num_wires_for_circuit:
-                     samples_str = ["".join(map(str,raw_results.astype(int)))]
+                    samples_str = [str(int(s)) for s in raw_results]
+                elif (
+                    self.shots == 1
+                    and raw_results.shape[0] == self.num_wires_for_circuit
+                ):
+                    samples_str = ["".join(map(str, raw_results.astype(int)))]
                 else:
-                     return {"error": f"Received 1D samples array with shape {raw_results.shape} for {self.num_wires_for_circuit} wires and {self.shots} shots. Processing unclear.", "raw_result": str(raw_results)}
-            elif raw_results.ndim == 2: 
-                 if raw_results.shape[1] != self.num_wires_for_circuit: # Check if number of measured wires matches
-                     return {"error": f"Sample array has {raw_results.shape[1]} wires, but circuit has {self.num_wires_for_circuit} wires. QASM measure ops might target a subset.", "raw_result": str(raw_results)}
-                 samples_str = ["".join(map(str,row)) for row in raw_results.astype(int)]
+                    return {
+                        "error": (
+                            "Received 1D samples array with shape "
+                            f"{raw_results.shape} for {self.num_wires_for_circuit} "
+                            f"wires and {self.shots} shots. Processing unclear."
+                        ),
+                        "raw_result": str(raw_results),
+                    }
+            elif raw_results.ndim == 2:
+                if raw_results.shape[1] != self.num_wires_for_circuit:
+                    return {
+                        "error": (
+                            "Sample array has "
+                            f"{raw_results.shape[1]} wires, but circuit has "
+                            f"{self.num_wires_for_circuit} wires."
+                        ),
+                        "raw_result": str(raw_results),
+                    }
+                samples_str = [
+                    "".join(map(str, row)) for row in raw_results.astype(int)
+                ]
             else:
-                return {"error": f"Unexpected sample array dimensions: {raw_results.ndim}", "raw_result": str(raw_results)}
+                return {
+                    "error": f"Unexpected sample array dimensions: {raw_results.ndim}",
+                    "raw_result": str(raw_results),
+                }
 
-            counts = {}
+            counts: Dict[str, int] = {}
             for s_val in samples_str:
                 counts[s_val] = counts.get(s_val, 0) + 1
             return counts
         else:
-            return {"info": "Analytic mode (shots=0 or None). Result is not processed into counts by this device.", "raw_result": raw_results}
+            return {
+                "info": (
+                    "Analytic mode (shots=0 or None). Result is not processed "
+                    "into counts by this device."
+                ),
+                "raw_result": raw_results,
+            }
 
     def monitor(self, res: Any) -> Dict[str, Any]:
-        if isinstance(res, dict) and "counts" in res and isinstance(res["counts"], dict):
-             internal_counts = res["counts"]
-             total_shots_observed = sum(internal_counts.values())
-             num_unique_outcomes = len(internal_counts)
-             return {
+        if (
+            isinstance(res, dict)
+            and "counts" in res
+            and isinstance(res["counts"], dict)
+        ):
+            internal_counts = res["counts"]
+            total_shots_observed = sum(internal_counts.values())
+            num_unique_outcomes = len(internal_counts)
+            return {
                 "total_shots_observed": int(total_shots_observed),
                 "num_unique_outcomes": num_unique_outcomes,
-                "counts": {str(k): int(v) for k,v in internal_counts.items()} 
+                "counts": {str(k): int(v) for k, v in internal_counts.items()},
             }
-        elif isinstance(res, dict) and all(isinstance(k, str) and isinstance(v, (int, pnp.integer)) for k, v in res.items()):
+        elif isinstance(res, dict) and all(
+            isinstance(k, str) and isinstance(v, (int, pnp.integer))
+            for k, v in res.items()
+        ):
             total_shots_observed = sum(res.values())
             num_unique_outcomes = len(res)
             cleaned_counts = {str(k): int(v) for k, v in res.items()}
             return {
                 "total_shots_observed": int(total_shots_observed),
                 "num_unique_outcomes": num_unique_outcomes,
-                "counts": cleaned_counts 
+                "counts": cleaned_counts,
             }
         return {"result_summary": f"Result not in expected counts format: {str(res)}"}
+
