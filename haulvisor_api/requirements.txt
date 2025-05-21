@@ -1,34 +1,36 @@
+# haulvisor_api/requirements.txt  – fully solvable on Render
 # --------------------------------------------------------------------------
-# haulvisor_api/requirements.txt
-# --------------------------------------------------------------------------
-# ── API + server ───────────────────────────────────────────────────────────
+# ── API
 fastapi>=0.110,<0.120
 uvicorn[standard]>=0.29,<0.40
 
-# ── Validation & settings ─────────────────────────────────────────────────
+# ── Config / validation
 pydantic>=2.7,<3
 pydantic-settings>=2.3,<3
 python-multipart
 
-# ── CLI / logging / UX ────────────────────────────────────────────────────
+# ── CLI / logging / UX
 typer
 rich
 loguru
 
-# ── Quantum SDKs & plug-ins ───────────────────────────────────────────────
-pennylane>=0.41                 # core framework
-pennylane-qiskit>=0.41          # QASM loader plugin used by HaulVisor
-qiskit==0.46.3                  # match the plugin’s tested range
-qiskit-aer==0.13.3
-qiskit-ibm-runtime==0.21.0      # contains SamplerV2 → avoids ImportError
-amazon-braket-sdk               # optional AWS back-end
-amazon-braket-pennylane-plugin  # PennyLane-to-Braket connector (optional)
+# ── Quantum core + plug-ins (new coherent 1.x stack)
+pennylane>=0.41            # core
+pennylane-qiskit>=0.41     # QASM loader plugin
 
-# ── AWS helpers ───────────────────────────────────────────────────────────
+qiskit==1.1.0              # meta-package (pulls Terra 0.47.x etc.)
+qiskit-aer==0.14.2         # simulator compiled for 1.x API
+qiskit-ibm-runtime==0.21.0 # Sampler V2, works with 1.x
+
+# Optional AWS back-end
+amazon-braket-sdk
+amazon-braket-pennylane-plugin
+
+# ── Cloud helpers
 boto3
 
-# ── Numeric / scientific stack ────────────────────────────────────────────
-numpy                            # left unpinned for wheel compatibility
+# ── Numeric stack
+numpy
 scipy
 PyYAML
 
