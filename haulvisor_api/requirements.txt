@@ -1,48 +1,35 @@
-# ────────────────────────────────────────────────────────────────
-# haulvisor_api/requirements.txt
-# Consolidated, build-proven dependency list for Render
-# ────────────────────────────────────────────────────────────────
+# ── Web framework & server ─────────────────────────────────────────────
+fastapi>=0.110,<0.120
+uvicorn[standard]>=0.29,<0.40
 
-##################################################################
-# Web framework & ASGI server
-##################################################################
-fastapi>=0.110,<0.120             # 0.115.x is current; blocks any 1.x break
-uvicorn[standard]>=0.29,<0.40     # includes httptools, uvloop, watchfiles …
-
-##################################################################
-# Validation, settings & multipart parsing
-##################################################################
-pydantic>=2.7,<3                  # HaulVisor needs >=2.7; FastAPI <3
+# ── Validation & settings ──────────────────────────────────────────────
+pydantic>=2.7,<3
 pydantic-settings>=2.3,<3
-python-multipart                  # enables FastAPI file-upload endpoints
+python-multipart
 
-##################################################################
-# CLI / logging / pretty output
-##################################################################
-typer                             
-rich                              
-loguru                             
+# ── CLI / logging / pretty output ──────────────────────────────────────
+typer
+rich
+loguru
 
-##################################################################
-# Quantum SDKs & device back-ends
-##################################################################
-pennylane                          # core framework (latest 0.41 tested)
-pennylane-qiskit                   # plugin ⇢ PennyLane ↔ Qiskit Aer
-amazon-braket-sdk                  # AWS Braket Python SDK
-amazon-braket-pennylane-plugin     # plugin ⇢ PennyLane ↔ Braket
-qiskit>=2.0                        # meta-package (Terra + etc.)
-qiskit-aer                         # local simulator
-qiskit-ibm-runtime                 # IBM Runtime client (optional cloud HW)
+# ── Quantum SDKs & back-ends ───────────────────────────────────────────
+pennylane==0.41.1
+pennylane-qiskit==0.41.0.post0      # provides qml.from_qasm plugin
 
-##################################################################
-# AWS helpers (pulled in by Braket SDK but pinned here for clarity)
-##################################################################
-boto3                              
+# --->  ⬇  stick to the legacy 0.x line ⬇  <---
+qiskit==0.46.3
+qiskit-aer==0.13.3
+qiskit-ibm-runtime==0.14.0
+# --------------------------------------------
 
-##################################################################
-# Numeric / scientific stack
-##################################################################
-numpy                               # leave un-pinned → pip resolver picks
-scipy                               # versions compatible with all above
-PyYAML                              
+amazon-braket-sdk                   # optional – leave unpinned
+amazon-braket-pennylane-plugin      # optional – leave unpinned
+
+# ── AWS helpers ────────────────────────────────────────────────────────
+boto3
+
+# ── Numeric / scientific stack ─────────────────────────────────────────
+numpy
+scipy
+PyYAML
 
